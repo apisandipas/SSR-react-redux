@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import express from 'express';
 import renderer from './helpers/renderer'
 import createStore from './helpers/createStore'
@@ -18,4 +19,3 @@ app.get('*', (req, res) => {
 app.listen(3000, () => {
   console.log('listening on port 3000')
 })
-z
