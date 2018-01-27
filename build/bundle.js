@@ -381,6 +381,8 @@ var _serializeJavascript2 = _interopRequireDefault(_serializeJavascript);
 
 var _reactRedux = __webpack_require__(3);
 
+var _reactHelmet = __webpack_require__(28);
+
 var _Routes = __webpack_require__(5);
 
 var _Routes2 = _interopRequireDefault(_Routes);
@@ -402,7 +404,9 @@ exports.default = function (req, store, context) {
     )
   ));
 
-  return '\n    <html>\n      <head>\n        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">\n      </head>\n      <body>\n        <div id="root">' + content + '</div>\n        <script>window.INITIAL_STATE = ' + (0, _serializeJavascript2.default)(store.getState()) + '</script>\n        <script src="bundle.js"></script>\n       </body>\n    </html>  \n  ';
+  var hemlet = _reactHelmet.Helmet.renderStatic();
+
+  return '\n    <html>\n      <head>\n        ' + hemlet.title.toString() + '\n        ' + hemlet.meta.toString() + '\n        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">\n      </head>\n      <body>\n        <div id="root">' + content + '</div>\n        <script>window.INITIAL_STATE = ' + (0, _serializeJavascript2.default)(store.getState()) + '</script>\n        <script src="bundle.js"></script>\n       </body>\n    </html>  \n  ';
 };
 
 /***/ }),
@@ -562,12 +566,24 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactHelmet = __webpack_require__(28);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Home = function Home() {
   return _react2.default.createElement(
     'div',
     { className: 'center-align', style: { marginTop: '200px' } },
+    _react2.default.createElement(
+      _reactHelmet.Helmet,
+      null,
+      _react2.default.createElement(
+        'title',
+        null,
+        'React SSR | Home Page'
+      ),
+      _react2.default.createElement('meta', { property: 'og:title', content: 'React SSR | Home Page' })
+    ),
     _react2.default.createElement(
       'h3',
       null,
@@ -603,6 +619,8 @@ var _react = __webpack_require__(0);
 var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(3);
+
+var _reactHelmet = __webpack_require__(28);
 
 var _index = __webpack_require__(1);
 
@@ -640,11 +658,26 @@ var UsersList = function (_Component) {
       });
     }
   }, {
+    key: 'head',
+    value: function head() {
+      return _react2.default.createElement(
+        _reactHelmet.Helmet,
+        null,
+        _react2.default.createElement(
+          'title',
+          null,
+          'React SSR | Users List ' + this.props.users.length
+        ),
+        _react2.default.createElement('meta', { property: 'og:title', content: 'React SSR | Users List' })
+      );
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
         null,
+        this.head(),
         'Heres a list of users',
         _react2.default.createElement(
           'ul',
@@ -888,6 +921,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(3);
 
+var _reactHelmet = __webpack_require__(28);
+
 var _index = __webpack_require__(1);
 
 var _requireAuth = __webpack_require__(27);
@@ -928,11 +963,26 @@ var AdminsList = function (_Component) {
       });
     }
   }, {
+    key: 'head',
+    value: function head() {
+      return _react2.default.createElement(
+        _reactHelmet.Helmet,
+        null,
+        _react2.default.createElement(
+          'title',
+          null,
+          'React SSR | Admins List'
+        ),
+        _react2.default.createElement('meta', { property: 'og:title', content: 'React SSR | Admins List' })
+      );
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
         null,
+        this.head(),
         'Heres a list of admins',
         _react2.default.createElement(
           'ul',
@@ -1028,6 +1078,12 @@ exports.default = function (ChildComponent) {
 
   return (0, _reactRedux.connect)(mapStateToProps)(RequireAuth);
 };
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+module.exports = require("react-helmet");
 
 /***/ })
 /******/ ]);

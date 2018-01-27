@@ -1,6 +1,8 @@
 import React, { Component }from 'react'
 import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
 import { fetchUsers } from "../actions/index"
+
 
 class UsersList extends Component {
   componentDidMount () {
@@ -13,9 +15,19 @@ class UsersList extends Component {
     })
   }
 
+  head() {
+    return (
+      <Helmet>
+        <title>{`React SSR | Users List ${this.props.users.length}`}</title>
+        <meta property="og:title" content="React SSR | Users List"/>
+      </Helmet>
+    )
+  }
+
   render () {
     return (
       <div>
+        {this.head()}
         Heres a list of users
         <ul>
           {this.renderUsers()}
